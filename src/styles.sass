@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap')
+@import "./animations"
+
+$family-work-sans: 'Work Sans', sans-serif
+
+// color styling
+$primary: #D7263D
+$info: #02182B
+$success: #06D6A0
+$dark: #080F0F
+$grey-lighter: #E8EEF2
+
+
+
+// link styling
+$link: $primary
+
+
+
+// font styling
+$family-primary: $family-work-sans
+$family-secondary: $family-work-sans
+
+$navbar-height: 4.2rem
+
+@import node_modules/bulma/sass/utilities/_all
+@import node_modules/bulma/sass/layout/_all
+@import node_modules/bulma/sass/grid/_all
+@import node_modules/bulma/sass/form/_all
+@import node_modules/bulma/sass/elements/_all
+@import node_modules/bulma/sass/components/_all
+@import node_modules/bulma/sass/base/_all
+
+
+html, body
+    height: 100vh
+    width: 100vw
+    overflow-x: hidden
+    overflow-y: scroll
