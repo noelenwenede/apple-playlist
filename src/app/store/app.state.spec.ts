@@ -1,6 +1,7 @@
 import { AppState, GetPlaylist, PlayListItem } from './app.state';
 import { Store, NgxsModule } from '@ngxs/store';
 import { async, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AppState', () => {
   let store: Store
@@ -8,7 +9,8 @@ describe('AppState', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot([AppState])],
+      imports: [NgxsModule.forRoot([AppState]), HttpClientModule],
+  
     }).compileComponents();
     store = TestBed.get(Store);
   }));

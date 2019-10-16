@@ -2,7 +2,7 @@
   <div class="modal-background"></div>
   <div class="modal-card scale-in-center">
     <header class="modal-card-head">
-      <p class="modal-card-title">{{playlist.name}}</p>
+      <p class="modal-card-title">{{playlist?.name}}</p>
       <button class="delete" aria-label="close" (click)="closeModal()"></button>
     </header>
     <section class="modal-card-body p-0">
@@ -10,13 +10,13 @@
         [src]="getSafeUrl(playlist.url)">
         <p>Sorry apple doesn't allow iFraming</p>
       </iframe> -->
-      <img class="art" [src]="playlist.artwork" [alt]="playlist.name">
+      <img class="art" [src]="playlist?.artwork" [alt]="playlist?.name">
     </section>
     <footer class="modal-card-foot" style="text-align: right;">
-      <p class="has-text-primary">by {{playlist.curator_name}}</p>
+      <p class="has-text-primary"><span class="has-text-info">by</span> {{playlist?.curator_name}}</p>
 
       <!-- <button class="button is-success">Save changes</button>-->
-      <a class="button" [href]="playlist.url" target="_blank">View on apple music</a> 
+      <a class="button" [href]="playlist?.url" target="_blank">View on apple music</a> 
     </footer>
   </div>
 </div>

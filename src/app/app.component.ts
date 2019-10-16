@@ -1,22 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from './modal/modal.service';
 import { Select, Store } from '@ngxs/store';
-import { AppState, PlayList, GetPlaylist, PlayListItem } from './store/app.state';
+import { AppState, PlayList, GetPlaylist, PlayListItem, UpdateQuery } from './store/app.state';
 import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.sass'],
+  providers: [
+    Store
+  ]
 })
 export class AppComponent implements OnInit {
 
+  title = "playlist";
   @Select(AppState) appState$: Observable<PlayList>;
   currentPage: number = 0;
   itemsPerPage = 12;
   content: PlayListItem[];
 
-  get displayItems$(){
+  get displayItems$(): Observable<any[]>{
     if(this.content){
       let currentIndex = this.currentPage * this.itemsPerPage;
       return of(this.content.slice(currentIndex, this.itemsPerPage + currentIndex));
@@ -25,15 +29,10 @@ export class AppComponent implements OnInit {
     }
   }
 
-  get paginatorItems$() {
-    if(this.content){
-      
-    } else {
-      return of([])
-    }
-  }
-
-  get pages$() {
+  /**
+   * Returns an observable array of page numbers
+   */
+  get pages$(): Observable<any[]> {
     if(this.content){
       let pages = Math.ceil(this.content.length / this.itemsPerPage);
       let out = [];
@@ -54,7 +53,12 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new GetPlaylist());
     this.appState$.subscribe(d => {
-      this.content = d.content;
+      if(d.queryString && d.queryString !== ""){
+        this.content = d.content.filter((e:any) => (e.name as string).toLowerCase().includes((d.queryString as string).toLowerCase()));
+      } else {
+        this.content = d.content;
+      }
+      
     })
   }
 
@@ -90,6 +94,11 @@ export class AppComponent implements OnInit {
 
   goToPage(page){
     this.currentPage = page - 1;
+  }
+
+  search(query){
+    this.currentPage = 0;
+    this.store.dispatch(new UpdateQuery(query));
   }
 
 

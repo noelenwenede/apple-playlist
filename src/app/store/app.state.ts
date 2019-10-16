@@ -18,6 +18,11 @@ export class GetPlaylist {
     constructor() {}
 }
 
+export class UpdateQuery {
+    static readonly type = '[PLAYLIST] update query';
+    constructor(public query: string) {}
+}
+
 // state interface
 export interface PlayListItem {
     id: String;
@@ -34,6 +39,7 @@ export interface PlayList {
     loading: boolean;
     items: any;
     ids: string[];
+    queryString: String;
 }
 
 @State<PlayList>({
@@ -43,7 +49,8 @@ export interface PlayList {
         content: null,
         items: null,
         ids: null,
-        loading: false
+        loading: false,
+        queryString: null
     }
 })
 export class AppState {
@@ -90,5 +97,12 @@ export class AppState {
                 return throwError(res)
             })
         )
+    }
+
+    @Action(UpdateQuery)
+    updateQuery(ctx: StateContext<PlayList>, action: UpdateQuery){
+        ctx.patchState({
+            queryString: action.query
+        })
     }
 }

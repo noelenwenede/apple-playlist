@@ -34,6 +34,18 @@
     <div class="columns">
       <div class="column is-10 is-offset-1">
         <h1 class="title">{{state.name}}</h1>
+        <div class="columns">
+            <div class="column is-5 is-offset-7">
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" (keyup)="search($event.target.value)" type="search" placeholder="Search">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </div>
+            </div>
+        </div>
+        
+
         <div class="columns is-multiline is-mobile">
           <div *ngFor="let item of displayItems$ | async"
             class="column swing-in-top-fwd is-half-mobile is-one-third-tablet is-one-quarter-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
@@ -51,7 +63,7 @@
 
         <nav class="pagination is-small" role="navigation" aria-label="pagination">
           <a class="pagination-previous" *ngIf="currentPage" (click)="previous()">Previous</a>
-          <a class="pagination-next" (click)="next()">Next</a>
+          <a class="pagination-next" (click)="next()" *ngIf="content?.length && content?.length > itemsPerPage">Next</a>
 
           <ul class="pagination-list">
             <li *ngFor="let page of (pages$ | async)" (click)="goToPage(page)"><a [class.is-current]="page - 1 === currentPage" class="pagination-link">{{page}}</a></li>
